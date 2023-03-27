@@ -6,7 +6,7 @@ Parser for Intel and AMD Bitstreams
 ### Xilinx XRT
 
 ```bash
-source /opt/xilinx/xrt/setup.sh
+$ source /opt/xilinx/xrt/setup.sh
 ```
 
 ### Libxml2
