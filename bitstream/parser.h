@@ -9,6 +9,7 @@
 #include "utils.h"
 
 #include "elf/elf_parser.h"
+#include "axlf/axlf_parser.h"
 
 typedef enum bitstream_types
 {

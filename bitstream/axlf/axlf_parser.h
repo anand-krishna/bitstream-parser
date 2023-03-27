@@ -8,10 +8,10 @@ extern "C" {
 #include <unistd.h>
 #include <fcntl.h>
 
-#define XCLBIN_FREQ_SECTION ".acl.quartus_json"
-#define XCLBIN_METADATA_SECTION ".acl.quartus_json"
+#include "../common.h"
+#include "../utils.h"
 
-void parse_axlf(int fd, const char *filename);
+bitstream_object parse_axlf(int fd, const char *filename);
 
 #ifdef __cplusplus
 }

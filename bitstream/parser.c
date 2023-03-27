@@ -18,7 +18,7 @@ void parse_bitstream(bitstream_file_handler *bfd)
     }
     else if (bfd->bitstream_type == XCLBIN)
     {
-        // TODO: Use the XRT API.
+        bo = parse_axlf(bfd->os_file_descriptor, bfd->filepath);
     }
 
     fprintf(stdout, "[%s: %s:%d] Contents of the parsed bitstream are:\n\tDevice ID:%s\n\tKernel Frequency:%f\n\tSystem Frequency:%f\n", __FILE__, __func__, __LINE__, bo.device_name, bo.kernel_frequency, bo.system_frequency);
