@@ -30,16 +30,16 @@ bitstream_file_handler open_bitstream_file(const char *file_path)
 
     if (file_path == NULL)
     {
-        fprintf(stdout, "[%s:%d:%s] Filepath cannot be null.\n", __FILE__, __LINE__, __func__);
+        fprintf(stdout, "[%s:%d:\t%s] Filepath cannot be null.\n", __FILE__, __LINE__, __func__);
         exit(-1);
     }
 
-    parser_print_to(stdout, __FILE__, __func__, __LINE__, "Opening the bitstream file.\n");
+    fprintf(stdout, "[%s:%d:\t%s] Opening the bitstream file.\n", __FILE__, __LINE__, __func__);
     int fd = open(file_path, O_RDONLY | O_SYNC);
 
     if (fd == -1)
     {
-        fprintf(stdout, "[%s:%d:%s] Could not open the file.\n", __FILE__, __LINE__, __func__);
+        fprintf(stdout, "[%s:%d:\t%s] Could not open the file.\n", __FILE__, __LINE__, __func__);
         exit(-1);
     }
 

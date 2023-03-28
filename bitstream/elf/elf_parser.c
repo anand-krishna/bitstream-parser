@@ -42,15 +42,15 @@ elf_class get_elf_class(int fd)
     off_t offset = lseek(fd, (off_t)4, SEEK_SET);
     if (offset != (off_t)4)
     {
-        parser_print_to(stdout, __FILE__, __func__, __LINE__, "Could not realign the read pointer.\n");
+        fprintf(stdout, "[%s:%d:\t%s] Could not realign the read pointer.\n", __FILE__, __LINE__, __func__);
         printf("\tError message: %s.\n", strerror(errno));
         exit(-1);
     }
     int read_ret_val = read(fd, buffer, 1);
     if (read_ret_val == -1)
     {
-        parser_print_to(stdout, __FILE__, __func__, __LINE__, "Could not read a byte from the file.\n");
-        printf("\tError message: %s.\n", strerror(errno));
+        fprintf(stdout, "[%s:%d:\t%s] Could not read a byte from the file.\n", __FILE__, __LINE__, __func__);
+        fprintf(stdout, "\tError message: %s.\n", strerror(errno));
         exit(-1);
     }
 
@@ -100,8 +100,8 @@ bitstream_object parse32(int fd)
     section_table = malloc(header.e_shentsize * header.e_shnum);
     if (section_table == NULL)
     {
-        parser_print_to(stderr, __FILE__, __func__, __LINE__, "Could not allocate memory for the section table.\n");
-        printf("\tError message: %s.\n", strerror(errno));
+        fprintf(stdout, "[%s:%d:\t%s] Could not allocate memory for the section table.\n", __FILE__, __LINE__, __func__);
+        fprintf(stdout, "\tError message: %s.\n", strerror(errno));
         exit(-1);
     }
 
@@ -142,7 +142,7 @@ void read_header32(int fd, Elf32_Ehdr *header)
     off_t offset = lseek(fd, 0, SEEK_SET);
     if (offset != 0)
     {
-        parser_print_to(stderr, __FILE__, __func__, __LINE__, "Could reposition the cursor.\n");
+        // parser_print_to(stderr, __FILE__, __func__, __LINE__, "Could reposition the cursor.\n");
         printf("\tError message: %s.\n", strerror(errno));
         exit(-1);
     }
@@ -151,7 +151,7 @@ void read_header32(int fd, Elf32_Ehdr *header)
 
     if (read_size != sizeof(Elf32_Ehdr))
     {
-        parser_print_to(stderr, __FILE__, __func__, __LINE__, "Could not allocate memory for the section table.\n");
+        fprintf(stderr, __FILE__, __func__, __LINE__, "Could not allocate memory for the section table.\n");
         printf("\tError message: %s.\n", strerror(errno));
         exit(-1);
     }
@@ -162,7 +162,7 @@ void read_section_table32(int fd, Elf32_Ehdr *header, Elf32_Shdr *section_table)
     off_t offset = lseek(fd, header->e_shoff, SEEK_SET);
     if (offset != header->e_shoff)
     {
-        parser_print_to(stderr, __FILE__, __func__, __LINE__, "Could not reposition the cursor.\n");
+        // parser_print_to(stderr, __FILE__, __func__, __LINE__, "Could not reposition the cursor.\n");
         printf("\tError message: %s.\n", strerror(errno));
         exit(-1);
     }
@@ -172,7 +172,7 @@ void read_section_table32(int fd, Elf32_Ehdr *header, Elf32_Shdr *section_table)
         int read_size = read(fd, &section_table[i], header->e_shentsize);
         if (read_size != header->e_shentsize)
         {
-            parser_print_to(stderr, __FILE__, __func__, __LINE__, "Could not read the section table.\n");
+            // parser_print_to(stderr, __FILE__, __func__, __LINE__, "Could not read the section table.\n");
             printf("\tError message: %s.\n", strerror(errno));
             exit(-1);
         }
