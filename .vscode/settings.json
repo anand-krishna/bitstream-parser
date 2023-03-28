@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "elf_parser.h": "c",
-        "parser.h": "c"
+        "parser.h": "c",
+        "common.h": "c"
     }
 }

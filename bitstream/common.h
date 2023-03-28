@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-#include "utils.h"
-
 typedef struct bitstream_object_
 {
     char device_name[256];
