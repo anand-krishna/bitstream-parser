@@ -2,26 +2,24 @@
 
 #include <string.h>
 
+#include "elf/elf_parser.h"
+#include "axlf/axlf_parser.h"
+
 #define AOCX_MAGIC ELFMAG // AOCX files are ELF files.
 #define XCLBIN_MAGIC "xclbin2\0"
 
 bitstream_t get_bitstream_type(int fd);
 
-void parse_bitstream(bitstream_file_handler *bfd)
+bitstream_object parse_bitstream(bitstream_file_handler *bfd)
 {
-
-    bitstream_object bo;
-
     if (bfd->bitstream_type == AOCX)
     {
-        bo = parse_elf(bfd->os_file_descriptor);
+        return parse_elf(bfd->os_file_descriptor);
     }
     else if (bfd->bitstream_type == XCLBIN)
     {
-        bo = parse_axlf(bfd->os_file_descriptor, bfd->filepath);
+        return parse_axlf(bfd->os_file_descriptor, bfd->filepath);
     }
-
-    fprintf(stdout, "[%s: %s:%d] Contents of the parsed bitstream are:\n\tDevice ID:%s\n\tKernel Frequency:%f\n\tSystem Frequency:%f\n", __FILE__, __func__, __LINE__, bo.device_name, bo.kernel_frequency, bo.system_frequency);
 }
 
 bitstream_file_handler open_bitstream_file(const char *file_path)
@@ -32,7 +30,7 @@ bitstream_file_handler open_bitstream_file(const char *file_path)
 
     if (file_path == NULL)
     {
-        parser_print_to(stderr, __FILE__, __func__, __LINE__, "File path cannot be NULL.\n");
+        fprintf(stdout, "[%s:%d:%s] Filepath cannot be null.\n", __FILE__, __LINE__, __func__);
         exit(-1);
     }
 
@@ -41,29 +39,26 @@ bitstream_file_handler open_bitstream_file(const char *file_path)
 
     if (fd == -1)
     {
-        parser_print_to(stderr, __FILE__, __func__, __LINE__, "Could not open the file.\n");
+        fprintf(stdout, "[%s:%d:%s] Could not open the file.\n", __FILE__, __LINE__, __func__);
         exit(-1);
     }
 
     bfd.os_file_descriptor = fd;
 
     // Determine the type of the bitstream file.
-    parser_print_to(stdout, __FILE__, __func__, __LINE__, "Reading the magic bytes.\n");
     bitstream_t bitstream_type = get_bitstream_type(fd);
 
     if (bitstream_type == AOCX)
     {
-        parser_print_to(stdout, __FILE__, __func__, __LINE__, "Opened an Intel AOCX bitstream.\n");
         bfd.bitstream_type = bitstream_type;
     }
     else if (bitstream_type == XCLBIN)
     {
-        parser_print_to(stdout, __FILE__, __func__, __LINE__, "Opened an AMD XCLBIN bitstream.\n");
         bfd.bitstream_type = bitstream_type;
     }
     else
     {
-        parser_print_to(stderr, __FILE__, __func__, __LINE__, "Cannot parse the file. Only Intel and AMD target bitstreams are supported\n.");
+        fprintf(stdout, "[%s:%d:%s] Cannot parse the file. Only Intel and Xilinx bitstreams are supported.\n", __FILE__, __LINE__, __func__);
         exit(-1);
     }
 

@@ -18,8 +18,7 @@ extern "C" {
 bitstream_object parse_axlf(int fd, const char *filepath)
 {
 	bitstream_object bo;
-
-       	xrt::xclbin xclbinfile{filepath};
+	xrt::xclbin xclbinfile{filepath};
 	const axlf *axlf_ptr = xclbinfile.get_axlf();
 	for (int i=0; i<axlf_ptr->m_header.m_numSections; i++)
 	{

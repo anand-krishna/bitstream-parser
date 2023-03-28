@@ -6,6 +6,8 @@
 #include <libxml/parser.h>
 #include <jansson.h>
 
+#define AOCX_FREQ_SECTION ".acl.quartus_json"
+#define AOCX_BOARD_SPEC_SECTION ".acl.board_spec.xml"
 
 #define XML_PROP_NAME "name"
 #define JSON_PROP_NAME "quartusFitClockSummary"

@@ -9,7 +9,6 @@ extern "C" {
 #include <fcntl.h>
 
 #include "../common.h"
-#include "../utils.h"
 
 bitstream_object parse_axlf(int fd, const char *filename);
 

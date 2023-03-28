@@ -6,10 +6,6 @@
 #include <fcntl.h>
 
 #include "common.h"
-#include "utils.h"
-
-#include "elf/elf_parser.h"
-#include "axlf/axlf_parser.h"
 
 typedef enum bitstream_types
 {
@@ -25,7 +21,7 @@ typedef struct bitstream_file_handler_
     bitstream_t bitstream_type;
 } bitstream_file_handler; // TODO: Maybe renaming this would be good.
 
-void parse_bitstream(bitstream_file_handler *bfd);
+bitstream_object parse_bitstream(bitstream_file_handler *bfd);
 bitstream_file_handler open_bitstream_file(const char *file_path);
 void close_bitstream_file(bitstream_file_handler *to_close);
 
